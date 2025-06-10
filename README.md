@@ -20,4 +20,4 @@ uv pip install -r requirements.txt
 ```
 
 
-    * click on the given link by cltr + click or copy the link and past in browser * 
+ **click on the given link by cltr + click or copy the link and past in browser**
