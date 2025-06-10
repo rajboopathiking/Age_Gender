@@ -1,7 +1,9 @@
 ### Age-Gender Prediction
 
-**Note should have uv and check path**
-**Note Download best.onnx pretrained_model and paste it in Age_Gender**
+    **Note should have uv and check path**
+
+
+    **Note Download best.onnx pretrained_model and paste it in Age_Gender**
 
 1) activate venv
 
