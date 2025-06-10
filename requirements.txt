@@ -1,0 +1,11 @@
+onnx
+onnxruntime
+onnxruntime-tools
+torch
+gradio
+torchvision
+numpy
+pandas 
+matplotlib
+Pillow
+opencv-python
