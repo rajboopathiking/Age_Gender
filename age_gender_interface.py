@@ -8,7 +8,7 @@ from facenet_pytorch import MTCNN
 
 import os
 
-from Age_Gender.get_model import model
+from get_model import model
 if os.path.exists("best.onnx"):
     print("File already ")
 else:
