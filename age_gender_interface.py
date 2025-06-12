@@ -7,7 +7,6 @@ import onnxruntime as ort
 from facenet_pytorch import MTCNN
 
 import os
-
 from get_model import model
 if os.path.exists("best.onnx"):
     print("File already ")
