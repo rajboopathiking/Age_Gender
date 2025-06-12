@@ -8,8 +8,10 @@
 Create Virtual Environment
   ```bash
    pip install uv
-   uv venv env
   ```
+   ```bash
+    uv venv env
+   ```
 
 1) activate venv
 
