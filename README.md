@@ -1,7 +1,5 @@
 ### Age-Gender Prediction
 
-    **Note should have uv and check path**
-
 Create Virtual Environment
  install UV Package Manager
   ```bash
