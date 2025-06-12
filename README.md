@@ -6,9 +6,12 @@
     **Note Download best.onnx pretrained_model and paste it in Age_Gender**
 
 Create Virtual Environment
+ install UV Package Manager
   ```bash
    pip install uv
   ```
+ create venv
+ 
    ```bash
     uv venv env
    ```
