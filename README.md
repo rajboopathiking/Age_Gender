@@ -1,11 +1,11 @@
 ### Age-Gender Prediction
 
-Create Virtual Environment
- install UV Package Manager
+**Create Virtual Environment
+ install UV Package Manager**
   ```bash
    pip install uv
   ```
- create venv
+ **create venv**
  
    ```bash
     uv venv env
