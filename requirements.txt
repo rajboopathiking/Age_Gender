@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-torch>=1.13.0
+torch
 torchvision
 onnx
 onnxruntime
@@ -11,16 +10,4 @@ Pillow
 opencv-python
 facenet-pytorch
 gradio
-=======
-onnx
-onnxruntime
-onnxruntime-tools
-torch
-gradio
-torchvision
-numpy
-pandas 
-matplotlib
-Pillow
-opencv-python
->>>>>>> 59fdd0aa2e3de589f3f22e213e00f97045730190
+gdown

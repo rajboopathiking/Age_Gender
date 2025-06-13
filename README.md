@@ -2,15 +2,11 @@
 
     **Note should have uv and check path**
 
-
-    **Note Download best.onnx pretrained_model and paste it in Age_Gender**
-
-Create Virtual Environment
- install UV Package Manager
+**Create Virtual Environment install UV Package Manager**
   ```bash
    pip install uv
   ```
- create venv
+ **create venv**
  
    ```bash
     uv venv env
@@ -30,9 +26,7 @@ uv pip install -r requirements.txt
 3) Run
 
 ```bash
- uv run age_gender_interface.py
+ uv run interface.py
 ```
-
-**Note check best.onnx file in current folder !**
 
  **click on the given link by cltr + click or copy the link and past in browser**
