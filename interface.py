@@ -4,8 +4,13 @@ import tempfile
 import os
 from final_pipeline import inference
 
+
+### Create User Inferface
+
 def predict_with_temp(image: Image.Image):
-    # Save to a temporary file
+    '''
+     image store as temporary file and predict using model and return final Image
+    '''
     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
         temp_path = temp_file.name
         image.save(temp_path)
@@ -18,7 +23,7 @@ def predict_with_temp(image: Image.Image):
         if os.path.exists(temp_path):
             os.remove(temp_path)
 
-    return result_img  # Return the processed PIL image
+    return result_img 
 
 # Gradio UI
 iface = gr.Interface(

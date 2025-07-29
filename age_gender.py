@@ -39,6 +39,10 @@ transform = T.Compose([
 
 # Inference on cropped face
 def run_inference(face_image):
+
+    """
+     Predict Age and Gender
+    """
     with torch.no_grad():
         input_tensor = transform(face_image.convert("RGB")).unsqueeze(0)
         input_array = input_tensor.cpu().numpy()

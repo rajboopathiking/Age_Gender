@@ -1,9 +1,11 @@
+### Get Age & Gender Model
 def model():
 
     import gdown
 
     # Google Drive file ID
-    file_id = "1RRCUCVassEPfsJTorS5C9V0_BqMh1wdy"
+    # file_id = "1jvwSSUTyQSaunzRjEzI4hINM285AKNt8"
+    file_id = "1gOU7n8v1cQ2T77Uwn0IM1ioegkug2skX"
 
     # Construct the download URL
     url = f"https://drive.google.com/uc?id={file_id}"

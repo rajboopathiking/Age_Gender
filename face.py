@@ -1,58 +1,56 @@
-from person import predict_person
 def predict_face(image_path):
-    """
-    function Extract Person in image Then Extract Face Of Person then Detect age and gender
 
-    image_path : path of the images
-    
-      
-    """
+    '''
+    Detect Person Using pretrained Yolo Model and Detect Face Using MTCNN
+    '''
+    from person import predict_person
     import torch
     from facenet_pytorch import MTCNN
     from PIL import Image
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     mtcnn = MTCNN(
-        keep_all=True,
-        device=device,
-        image_size=224,
-        thresholds=[0.85, 0.90, 0.95]
-    )
+    min_face_size=20,
+    thresholds=[0.7, 0.8, 0.8],
+    margin=30,
+    keep_all=True,
+    image_size=224,
+    device=device
+)
 
-    # Get person crops and boxes
-    crop_data,_,image = predict_person(image_path)
+
+
+    crop_data, _, image = predict_person(image_path)
+
     person_images = crop_data["images"]
     face_boxes_all = []
     face_images_all = []
 
+    if not person_images:
+        # Fallback: face detection on whole image
+        bboxes, _ = mtcnn.detect(image)
+        if bboxes is not None:
+            for box in bboxes:
+                x1, y1, x2, y2 = map(int, box)
+                face_images_all.append(image.crop((x1, y1, x2, y2)))
+                face_boxes_all.append([x1, y1, x2, y2])
 
-    if len(crop_data["images"])<1:
-        bboxes, probs = mtcnn.detect(image)
-        for box in bboxes:
-            x1, y1, x2, y2 = map(int, box)
-            face_images_all.append(image.crop((x1, y1, x2, y2)))
-            face_boxes_all.append([x1, y1, x2, y2])
         return {
-            "person": [],
+            "person": {},  # empty to indicate no person
             "faces": {
                 "boxes": face_boxes_all,
                 "face_images": face_images_all
             }
         }
+
     else:
-
-
         for cropped_person in person_images:
-            bboxes, probs = mtcnn.detect(cropped_person)
-            
-            if bboxes is None:
-                continue  # No face detected in this person crop
-
-            for box in bboxes:
-                # Convert float to int for cropping
-                x1, y1, x2, y2 = map(int, box)
-                face_images_all.append(cropped_person.crop((x1, y1, x2, y2)))
-                face_boxes_all.append([x1, y1, x2, y2])
+            bboxes, _ = mtcnn.detect(cropped_person)
+            if bboxes is not None:
+                for box in bboxes:
+                    x1, y1, x2, y2 = map(int, box)
+                    face_images_all.append(cropped_person.crop((x1, y1, x2, y2)))
+                    face_boxes_all.append([x1, y1, x2, y2])
 
         return {
             "person": crop_data,

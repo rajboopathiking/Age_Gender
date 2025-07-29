@@ -1,11 +1,11 @@
-
+##get object detection model
 
 def model():
 
     import gdown
 
     # Google Drive file ID
-    file_id = "1gHR8K_hVhs2lkT860KODhP_mbfg7f7As"
+    file_id = "1SNYKCB1pkeeuThz5B0cNuqDoCtpDDomW"
 
     # Construct the download URL
     url = f"https://drive.google.com/uc?id={file_id}"

@@ -1,55 +1,46 @@
-
-
-def inference(image_path:str):
+def inference(image_path: str):
+    """
+    Final Inference Pipeline:
+    - Always detects faces and predicts age/gender.
+    - Uses person detection (if available) to also draw person bounding boxes.
+    """
     from face import predict_face
     from age_gender import run_inference
-    from PIL import Image,ImageDraw,ImageFont
-    org_img = Image.open(image_path)
-    outputs = predict_face(
-        image_path
-    )
+    from PIL import Image, ImageDraw, ImageFont
 
-    if len(outputs["person"]) < 1:
-        detection = {
-        "gender":[],
-        "age":[]
-    }
-        faces = outputs["faces"]
-        for i in faces["face_images"]:
-            gender,age = run_inference(i)
-            detection["gender"].append(gender)
-            detection["age"].append(age)
-        outputs["gender"] = detection["gender"]
-        outputs["age"] = detection["age"]
+    # Load image and run person+face detection
+    org_img = Image.open(image_path).convert("RGB")
+    outputs = predict_face(image_path)
 
-        draw = ImageDraw.Draw(org_img)
-        for gender,age,f_box in zip(outputs["gender"],outputs["age"],outputs["faces"]["boxes"]):
-            text = f"{gender} - {age}y"
-            f_x1,f_y1,f_x2,f_y2 = f_box
-            font = ImageFont.truetype("arial.ttf",size=50)
-            draw.rectangle([int(f_x1),int(f_y1),int(f_x2),int(f_y2)],width=5,outline="red")
-            draw.text((int(f_x1),int(f_y1)-60),text,font=font,fill="blue")
-        return org_img
-    else:
-        detection = {
-            "gender":[],
-            "age":[]
-        }
-        faces = outputs["faces"]
-        for i in faces["face_images"]:
-            gender,age = run_inference(i)
-            detection["gender"].append(gender)
-            detection["age"].append(age)
-        outputs["gender"] = detection["gender"]
-        outputs["age"] = detection["age"]
+    # Extract outputs
+    person_boxes = outputs.get("person", {}).get("boxes", [])
+    face_boxes = outputs["faces"]["boxes"]
+    face_images = outputs["faces"]["face_images"]
 
-        draw = ImageDraw.Draw(org_img)
-        for gender,age,p_box,f_box in zip(outputs["gender"],outputs["age"],outputs["person"]["boxes"],outputs["faces"]["boxes"]):
-            text = f"{gender} - {age}y"
-            p_x1,p_y1,p_x2,p_y2 = p_box
-            f_x1,f_y1,f_x2,f_y2 = f_box
-            font = ImageFont.truetype("arial.ttf",size=50)
-            draw.rectangle([int(p_x1),int(p_y1),int(p_x2),int(p_y2)],width=5,outline="red")
-            draw.text((int(p_x1),int(p_y1)-60),text,font=font,fill="blue")
+    # Run age and gender prediction for all detected faces
+    detection = {"gender": [], "age": []}
+    for face_img in face_images:
+        gender, age = run_inference(face_img)
+        detection["gender"].append(gender)
+        detection["age"].append(age)
 
-        return org_img
+    # Prepare to draw
+    draw = ImageDraw.Draw(org_img)
+    try:
+        font = ImageFont.truetype("arial.ttf", size=50)
+    except:
+        font = ImageFont.load_default()
+
+    # Draw face bounding boxes with age and gender
+    for gender, age, f_box in zip(detection["gender"], detection["age"], face_boxes):
+        x1, y1, x2, y2 = map(int, f_box)
+        draw.rectangle([x1, y1, x2, y2], outline="red", width=5)
+        draw.text((x1, y1 - 60), f"{gender} - {age}y", font=font, fill="blue")
+
+    # Optionally draw person boxes if available
+    for p_box in person_boxes:
+        x1, y1, x2, y2 = map(int, p_box)
+        draw.rectangle([x1, y1, x2, y2], outline="green", width=3)
+        draw.text((x1, y1 - 60), "Person", font=font, fill="green")
+
+    return org_img

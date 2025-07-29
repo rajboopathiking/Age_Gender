@@ -1,6 +1,9 @@
 import torch
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+
+
+##Load FasterRCNN Model
 def get_model(num_classes=2, weight_path="/kaggle/input/model_fasterrcnn/pytorch/default/1/best_weights.pth", freeze_backbone=True):
     # Load model without pretrained weights to avoid mismatch
     model = fasterrcnn_resnet50_fpn(weights=None)

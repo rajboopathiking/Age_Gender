@@ -5,6 +5,9 @@ from PIL import Image
 import os
 from get_ob_model import model
 
+
+### Preprocessing 
+
 if not os.path.exists("./best_weights.pth"):
     model()
 else:
