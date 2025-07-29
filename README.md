@@ -30,9 +30,3 @@ uv pip install -r requirements.txt
 ```bash
  uv run interface.py
 ```
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0808529c83f1e4f398224514ffba1b4801cf3310
- **click on the given link by cltr + click or copy the link and past in browser**
